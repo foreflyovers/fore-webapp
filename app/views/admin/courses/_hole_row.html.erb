@@ -17,7 +17,7 @@
                 <span><%= link_to 'Delete', admin_video_path(hole.video), method: :delete, data: { confirm: 'Are you sure?' } %></span>
               <% end %>
             <% else %>
-              <span class="btn btn-success btn-file">Upload Video<%= f.file_field :video %></span>
+              <span class="upload_video_<%=hole.id%>"><span class="btn btn-success btn-file upload_video_btn_<%=hole.id%>">Upload Video<%= f.file_field :video, :class => "video_field_#{hole.id}" %></span></span>
             <% end %>
           </td>
           <td>
@@ -38,7 +38,7 @@
           </td>
           <td><span class="btn btn-success btn-file">Upload Images<%=  f.file_field :hole_images, type: :file, multiple: true %></span>
             <% if hole.hole_images.count > 0 %>
-              <span class="other_hole_images" data-hole-id="<%= hole.id%>">View other images</span>
+              <span class="other_hole_images other_hole_images_<%=hole.id%>" data-hole-id="<%= hole.id%>">View other images</span>
             <% end %>
           </td>
           <td>
@@ -64,15 +64,26 @@
           form.find("span.progress_percent").html("0%");
         },
         uploadProgress: function(event, position, total, percentComplete) {
+          event.preventDefault();
           var form = $("form#hole_<%= hole.id %>_update_form");
           form.find("span.progress_percent").html(percentComplete+ "%");
+          if ($(".video_field_<%= hole.id %>").val() != ""){
+            $(".upload_video_btn_<%= hole.id %>").hide();
+            $(".upload_video_<%= hole.id %>").html("<span>Uploading...</span>");
+          }
           if(percentComplete == "100"){
             form.find("span.progress_percent").html("Processing...");
+            if ($(".video_field_<%= hole.id %>").val() != ""){
+              $(".upload_video_btn_<%= hole.id %>").hide();
+              $(".upload_video_<%= hole.id %>").html("<span>Processing...</span>");
+            }
           }
         },
         success: function() {
+          $(".upload_video_<%= hole.id %>").hide();
         },
       complete: function(xhr) {
+        window.location.reload();
       }
     });
   });
