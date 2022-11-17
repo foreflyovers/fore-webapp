@@ -255,11 +255,40 @@ class Admin::CoursesController < ApplicationController
       hole_video = params[:hole][:video].tempfile
       hole_video_file = File.join("public", "hole_#{params[:hole][:id]}", "#{params[:hole][:video].original_filename}")
       FileUtils.cp hole_video.path, hole_video_file
+      video_file = File.open(hole_video_file)
       hole_details[:video_id] = hole_video_obj.id
       hole_details[:video_file_path] = hole_video_file
     end
     hole_details[:hole_images_paths] = hole_images_paths
-    UploadHoleMediaWorker.perform_async(hole_details) if hole_details[:video_file_path].present? || hole_details[:hole_images_paths].present?
+    # UploadHoleMediaWorker.perform_async(hole_details) if hole_details[:video_file_path].present? || hole_details[:hole_images_paths].present?
+
+    memory_output = %x(free)
+    free_memory = memory_output.split(" ")[9].to_i + memory_output.split(" ")[12].to_i
+    if free_memory.to_i < 1048576
+      UploadHoleMediaWorker.perform_in(10.minutes, hole_details)
+      return
+    end
+
+    if hole_images_paths.present?
+      hole_images_paths.each do |image|
+        image_file = File.open(image) rescue nil
+        if image_file.present?
+          @hole.hole_images.create(image: image_file)
+        end
+      end
+      FileUtils.rm_rf("public/hole_#{hole_details["hole_id"]}")
+    end
+
+    video_file = File.open(hole_video_file)
+
+    if video_file.present?
+      hole_video = Video.find(hole_video_obj.id) rescue nil
+      hole_video.update(status: "uploading")
+      hole_video = @hole.build_video(status: "processing") if hole_video.nil?
+      hole_video.video = video_file
+      hole_video.status = "completed"
+    end
+    hole_video.save if hole_video.present?
   end
 
   def holes_list
