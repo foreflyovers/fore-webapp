@@ -69,7 +69,7 @@
         <div  class="playlist">
           <ul id="playlist" >
             <% @holes.try(:each) do |hole| %>
-              <li id="<%=hole.hole_num%>" class= "hole-number" hole_image= "<%= hole.logo_image.present? ? hole.logo_image.url : logo_on_video(@course)%>" logo_hyperlink = "<%= hole.logo_hyperlink.present? ? hole.logo_hyperlink : hyperlink_on_video(@course)%>" color="<%=color_selector(@course.color_selector)%>">
+              <li id="<%=hole.hole_num%>" class= "hole-number" hole_image= "<%= hole.logo_image.present? ? hole.logo_image.url.gsub("http", "https") : logo_on_video(@course)%>" logo_hyperlink = "<%= hole.logo_hyperlink.present? ? hole.logo_hyperlink : hyperlink_on_video(@course)%>" color="<%=color_selector(@course.color_selector)%>">
                 <%= link_to embed_hole_info_path(hole.id, hole_num: hole.hole_num), remote: true do %>
                   <span><%= hole.hole_num %></span>
                 <% end %>
