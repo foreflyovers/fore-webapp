@@ -272,7 +272,7 @@
     </div>
     <% if @resort.lead_generation.blank? %>
       <div class= 'footer-cls' style="border-top: <%= @resort.fore_line_color.present? ? "3px solid" + " "+ @resort.fore_line_color : "3px solid #ec3f3c" %>">
-        <div style ="background: url('<%=@resort.logo.url.gsub("http", "https")%>');" class= 'image-cls'> </div>
+        <div style ="background: url('<%=@resort.logo.url.gsub("s3-us-west-2.amazonaws.com/fore92", "d1s5na5d5z3eyp.cloudfront.net").gsub("http", "https")%>');" class= 'image-cls'> </div>
         <button class= "btn-cls" onclick='redirect("<%=lead_url%>")' type="button" formtarget="_blank" style="background-color: <%= @resort.fore_btn_background.present? ? @resort.fore_btn_background : "#ec3f3c" %>"> <%= @resort.fore_btn_text.present? ? @resort.fore_btn_text : "BECOME A MEMBER" %> </button>
       </div>
     <% end %>

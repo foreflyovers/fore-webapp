@@ -34,7 +34,7 @@
       </div>
       <div id="11">
         <ul id="map">
-          <li><%=image_tag @hole.map.url.gsub("http","https") %></li>
+          <li><%=image_tag @hole.map.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http","https") %></li>
         </ul>
       </div>
       <div id="22">
@@ -42,7 +42,7 @@
         <div class="slider-bg-color-right"> </div>
         <ul id="slider-1" class="bxslider">
           <% @hole.hole_images.order(:rank).each do | holeimage | %>
-            <li><%=image_tag holeimage.image.url.gsub("http","https") %></li>
+            <li><%=image_tag holeimage.image.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http","https") %></li>
           <% end%>
         </ul>
       </div>
@@ -54,7 +54,7 @@
       </div>
       <div id="33">
         <ul id="map">
-          <li><%=image_tag @hole.map.url.gsub("http", "https") %></li>
+          <li><%=image_tag @hole.map.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http", "https") %></li>
         </ul>
       </div>
       <div id="44">
@@ -62,7 +62,7 @@
         <div class="slider-bg-color-right hole-info-right"> </div>
         <ul id="slider-2" class="bxslider">
           <% @hole.hole_images.order(:rank).each do | holeimage | %>
-            <li><%=image_tag holeimage.image.url.gsub("http", "https") %></li>
+            <li><%=image_tag holeimage.image.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http", "https") %></li>
           <% end%>
         </ul>
       </div>
