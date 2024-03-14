@@ -10,7 +10,7 @@
         <% @course.playlist_items.each_with_index do |video, index| %>
           <li data-current-src="<%= video.get_src_url((is_mobile? ? 'mobile' : 'medium').to_sym) %>" class="playlist_items" data-video-index="<%= index %>">
             <div>
-              <%= image_tag video.thumbnail_image.url.gsub("http", "https") %>
+              <%= image_tag video.thumbnail_image.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http", "https") %>
               <a href="javascript:void(0)">
                 <%= image_tag "big-play.png", :class => "play_btn" %>
               </a>
@@ -107,7 +107,7 @@
 <div class="slider-bg-color-right"> </div>
 <ul id="slider" class="bxslider"> 
   <% @course.course_images.each do | courseimage | %>
-    <li><%=image_tag courseimage.photo.url.gsub("http", "https") %></li>
+    <li><%=image_tag courseimage.photo.url.gsub('s3-us-west-2.amazonaws.com/fore92', 'd1s5na5d5z3eyp.cloudfront.net').gsub("http", "https") %></li>
   <% end%>
 </ul>
 </div>
